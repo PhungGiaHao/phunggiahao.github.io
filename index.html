@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Phung Gia Hao - Senior React Native Developer. Portfolio of shipped iOS and Android apps.">
+<title>Phung Gia Hao Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a release log. Each shipped app is an entry with its store identity (bundle id, market, store facts),
+   a hand-drawn phone screen in the app's own colour, and what was built. */
+:root {
+  --bg: #F1F3F6;
+  --surface: #FFFFFF;
+  --ink: #121A24;
+  --muted: #586473;
+  --line: #DADFE6;
+  --accent: #0B7A63;
+  --accent-soft: #DDF1EB;
+  --phone: #121A24;
+
+  /* App colours (the screens are illustrations, same in both themes) */
+  --stella: #B4235A;   --stella-2: #2A0F1C;
+  --care: #2C7BB6;     --care-2: #EAF3FA;
+  --run: #F26A1B;      --run-2: #1C1410;
+  --nawe: #4B4FD6;     --nawe-2: #F2F2FC;
+  --corgi: #E2A325;    --corgi-2: #14110A;
+
+  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0C1117; --surface: #141B23; --ink: #E7ECF2; --muted: #96A3B3; --line: #26313D;
+    --accent: #3FCBA7; --accent-soft: #123229; --phone: #05080B;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0C1117; --surface: #141B23; --ink: #E7ECF2; --muted: #96A3B3; --line: #26313D;
+  --accent: #3FCBA7; --accent-soft: #123229; --phone: #05080B;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* ---------- Hero ---------- */
+.hero { padding-block: 72px 40px; display: grid; gap: 28px; }
+.eyebrow {
+  font-family: var(--f-mono); font-size: 13px; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--accent); display: flex; align-items: center; gap: 10px;
+}
+.eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft); }
+h1 {
+  font-family: var(--f-display); font-weight: 800; font-size: clamp(44px, 8vw, 92px);
+  line-height: .95; letter-spacing: -.035em; margin: 0; text-wrap: balance;
+}
+.role { font-family: var(--f-display); font-weight: 500; font-size: clamp(20px, 2.6vw, 28px);
+  color: var(--muted); margin: 0; letter-spacing: -.01em; }
+.lede { max-width: 62ch; font-size: 18px; margin: 0; }
+.facts {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+}
+.fact { padding: 18px 16px 18px 0; display: grid; gap: 2px; min-width: 0; }
+.fact + .fact { padding-left: 16px; border-left: 1px solid var(--line); }
+.fact b { font-family: var(--f-display); font-size: 30px; font-weight: 700; letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums; line-height: 1.1; }
+.fact span { font-size: 13.5px; color: var(--muted); }
+.contact { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 16px;
+  border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  font: 500 14.5px var(--f-body); text-decoration: none; cursor: pointer;
+}
+.btn:hover { border-color: var(--ink); }
+.btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn.primary:hover { opacity: .88; }
+.btn svg { width: 16px; height: 16px; flex: none; }
+.plain { font-family: var(--f-mono); font-size: 14px; color: var(--muted); user-select: all; }
+
+/* ---------- Section heads ---------- */
+section { padding-block: 40px; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px;
+  margin-bottom: 24px; }
+h2 { font-family: var(--f-display); font-weight: 700; font-size: clamp(28px, 4vw, 40px);
+  letter-spacing: -.025em; line-height: 1.05; margin: 0; text-wrap: balance; }
+.sec-head p { margin: 6px 0 0; color: var(--muted); max-width: 52ch; }
+
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  font: 500 13.5px var(--f-body); padding: 7px 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: transparent; color: var(--muted);
+}
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip:hover { color: var(--ink); }
+
+/* ---------- App entries ---------- */
+.apps { display: grid; gap: 20px; }
+.app {
+  --c: var(--accent);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 22px;
+  display: grid; grid-template-columns: 236px minmax(0, 1fr); gap: 36px; padding: 32px;
+}
+.app[data-app="stella"] { --c: var(--stella); }
+.app[data-app="care"]   { --c: var(--care); }
+.app[data-app="run"]    { --c: var(--run); }
+.app[data-app="nawe"]   { --c: var(--nawe); }
+.app[data-app="corgi"]  { --c: var(--corgi); }
+
+.meta-top { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center;
+  font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); }
+.meta-top .domain { color: var(--c); font-weight: 500; text-transform: uppercase; letter-spacing: .05em; }
+.app h3 { font-family: var(--f-display); font-weight: 700; font-size: 32px; letter-spacing: -.02em;
+  line-height: 1.05; margin: 10px 0 4px; }
+.app h3 small { font-family: var(--f-body); font-weight: 400; font-size: 16px; color: var(--muted);
+  letter-spacing: 0; margin-left: 6px; }
+.client { color: var(--muted); font-size: 14.5px; margin: 0 0 14px; }
+.desc { margin: 0 0 18px; max-width: 64ch; }
+
+.store {
+  display: flex; flex-wrap: wrap; gap: 0; margin: 0 0 18px; border: 1px solid var(--line); border-radius: 12px;
+  overflow: hidden; width: fit-content; max-width: 100%;
+}
+.store div { padding: 8px 14px; display: grid; min-width: 0; }
+.store div + div { border-left: 1px solid var(--line); }
+.store dt { font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.store dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; font-size: 14.5px; }
+
+.built-label { font-family: var(--f-mono); font-size: 12px; text-transform: uppercase; letter-spacing: .07em;
+  color: var(--muted); margin: 0 0 8px; }
+.built { list-style: none; padding: 0; margin: 0 0 20px; display: grid; gap: 7px; }
+.built li { position: relative; padding-left: 20px; font-size: 15px; }
+.built li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 8px; height: 8px;
+  border-radius: 2px; background: var(--c); }
+.stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 20px; padding: 0; list-style: none; }
+.stack li { font-family: var(--f-mono); font-size: 12.5px; padding: 4px 9px; border-radius: 6px;
+  background: var(--bg); border: 1px solid var(--line); }
+.links { display: flex; flex-wrap: wrap; gap: 8px; }
+.links a { height: 38px; font-size: 14px; }
+.bundle { font-family: var(--f-mono); font-size: 12px; color: var(--muted); margin-top: 14px;
+  overflow-wrap: anywhere; }
+
+/* ---------- Phone illustrations ---------- */
+.phone-col { display: grid; justify-items: center; align-content: start; gap: 14px; }
+.phone {
+  width: 210px; max-width: 100%; aspect-ratio: 9 / 19; border-radius: 34px; padding: 9px;
+  background: var(--phone); position: relative;
+  box-shadow: 0 1px 0 var(--line), 0 24px 40px -24px rgba(10, 20, 30, .45);
+}
+.screen { width: 100%; height: 100%; border-radius: 26px; overflow: hidden; position: relative;
+  display: flex; flex-direction: column; }
+.notch { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 64px; height: 18px;
+  border-radius: 10px; background: var(--phone); z-index: 3; }
+.platforms { display: flex; gap: 6px; font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+.platforms span { padding: 3px 8px; border: 1px solid var(--line); border-radius: 6px; }
+
+/* StellaJean: vertical short drama */
+.s-stella { background: var(--stella-2); color: #fff; justify-content: flex-end; padding: 14px; gap: 8px; }
+.s-stella::before { content: ""; position: absolute; inset: 0;
+  background: radial-gradient(120% 70% at 30% 25%, var(--stella) 0%, transparent 60%),
+              radial-gradient(90% 60% at 80% 60%, #5B1A7A 0%, transparent 65%); opacity: .9; }
+.s-stella > * { position: relative; }
+.ep { font-family: var(--f-mono); font-size: 9px; letter-spacing: .08em; opacity: .85; }
+.ttl { font-family: var(--f-display); font-weight: 700; font-size: 17px; line-height: 1.1; }
+.bar { height: 3px; border-radius: 2px; background: rgba(255,255,255,.3); overflow: hidden; }
+.bar i { display: block; height: 100%; width: 58%; background: #fff; }
+.side { position: absolute; right: 10px; bottom: 74px; display: grid; gap: 10px; }
+.side i { width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,.22); display: block; }
+.coin { display: inline-flex; gap: 6px; align-items: center; font-size: 10px; background: rgba(255,255,255,.16);
+  padding: 4px 8px; border-radius: 999px; width: fit-content; }
+.coin b { width: 10px; height: 10px; border-radius: 50%; background: #F6C64B; display: block; }
+
+/* Care Connect: care team chat */
+.s-care { background: var(--care-2); padding: 34px 10px 10px; gap: 7px; color: #183247; }
+.c-head { display: flex; align-items: center; gap: 7px; font-size: 10.5px; font-weight: 600;
+  padding-bottom: 7px; border-bottom: 1px solid rgba(44,123,182,.18); }
+.c-head i { width: 22px; height: 22px; border-radius: 50%; background: var(--care); display: block; }
+.msg { font-size: 9.5px; line-height: 1.35; padding: 6px 8px; border-radius: 10px; max-width: 82%;
+  background: #fff; }
+.msg.me { align-self: flex-end; background: var(--care); color: #fff; }
+.doc { background: #fff; border-radius: 10px; padding: 7px 8px; display: grid; gap: 4px; max-width: 86%; }
+.doc span { font-size: 9px; font-weight: 600; }
+.doc i { height: 4px; border-radius: 2px; background: #D3E3EF; display: block; }
+.doc i:nth-child(3) { width: 70%; }
+.sign { align-self: flex-start; font-size: 9px; font-weight: 600; color: var(--care);
+  border: 1px solid var(--care); border-radius: 999px; padding: 3px 8px; background: #fff; }
+.c-bar { margin-top: auto; display: flex; gap: 6px; }
+.c-bar i { flex: 1; height: 24px; border-radius: 12px; background: #fff; display: block; }
+.c-bar b { width: 24px; height: 24px; border-radius: 50%; background: var(--care); display: block; }
+
+/* RunTogether: run tracking */
+.s-run { background: var(--run-2); color: #fff; padding: 34px 12px 12px; gap: 10px; }
+.map { flex: 1; border-radius: 14px; background:
+  repeating-linear-gradient(0deg, transparent 0 18px, rgba(255,255,255,.05) 18px 19px),
+  repeating-linear-gradient(90deg, transparent 0 18px, rgba(255,255,255,.05) 18px 19px), #2A1F18;
+  position: relative; overflow: hidden; }
+.map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.km { font-family: var(--f-display); font-weight: 800; font-size: 34px; line-height: 1; letter-spacing: -.02em; }
+.km small { font-size: 12px; font-weight: 500; opacity: .7; margin-left: 3px; }
+.r-row { display: flex; justify-content: space-between; font-family: var(--f-mono); font-size: 9.5px; opacity: .85; }
+.token { display: flex; justify-content: space-between; align-items: center; background: var(--run);
+  border-radius: 12px; padding: 8px 10px; font-size: 10px; font-weight: 600; }
+.token span { font-family: var(--f-mono); }
+
+/* NaWeDey: social feed */
+.s-nawe { background: var(--nawe-2); padding: 34px 10px 10px; gap: 8px; color: #1C1D4A; }
+.stories { display: flex; gap: 6px; }
+.stories i { width: 30px; height: 30px; border-radius: 50%; display: block;
+  border: 2px solid var(--nawe); background: #D9DAF7; }
+.post { background: #fff; border-radius: 12px; padding: 8px; display: grid; gap: 6px; }
+.who { display: flex; align-items: center; gap: 6px; font-size: 9.5px; font-weight: 600; }
+.who i { width: 18px; height: 18px; border-radius: 50%; background: var(--nawe); display: block; }
+.pic { height: 74px; border-radius: 8px; background: linear-gradient(135deg, #7C80F0, var(--nawe)); }
+.ln { height: 4px; border-radius: 2px; background: #E3E4F6; }
+.ln.s { width: 60%; }
+.event { background: var(--nawe); color: #fff; border-radius: 12px; padding: 8px; font-size: 9.5px;
+  display: flex; gap: 8px; align-items: center; }
+.event b { font-family: var(--f-display); font-size: 16px; line-height: 1; text-align: center; }
+.event b small { display: block; font-size: 8px; font-weight: 500; letter-spacing: .06em; }
+
+/* CorgiStudio: multi-chain NFT hub */
+.s-corgi { background: var(--corgi-2); color: #F5EBD6; padding: 34px 10px 10px; gap: 8px; }
+.bal { font-family: var(--f-mono); font-size: 9px; opacity: .7; letter-spacing: .06em; }
+.bal b { display: block; font-family: var(--f-display); font-size: 22px; opacity: 1; color: #fff; letter-spacing: -.01em; }
+.chains { display: flex; flex-wrap: wrap; gap: 4px; }
+.chains span { font-family: var(--f-mono); font-size: 8.5px; padding: 3px 6px; border-radius: 999px;
+  border: 1px solid rgba(226,163,37,.5); color: var(--corgi); }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.nft { aspect-ratio: 1; border-radius: 10px; position: relative; overflow: hidden; }
+.nft:nth-child(1) { background: linear-gradient(140deg, #E2A325, #B4532A); }
+.nft:nth-child(2) { background: linear-gradient(140deg, #3A7BD5, #1B2A55); }
+.nft:nth-child(3) { background: linear-gradient(140deg, #7A4FD6, #2A1858); }
+.nft:nth-child(4) { background: linear-gradient(140deg, #2FB58A, #0E3B2E); }
+.nft::after { content: ""; position: absolute; width: 46%; aspect-ratio: 1; border-radius: 50%;
+  left: 27%; top: 27%; background: rgba(255,255,255,.28); }
+.stake { margin-top: auto; background: var(--corgi); color: #14110A; border-radius: 12px; padding: 8px 10px;
+  font-size: 10px; font-weight: 700; text-align: center; }
+
+/* ---------- Capabilities ---------- */
+.caps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0;
+  border-top: 1px solid var(--line); }
+.cap { padding: 22px 22px 22px 0; border-bottom: 1px solid var(--line); min-width: 0; }
+.cap:not(:nth-child(3n+1)) { padding-left: 22px; border-left: 1px solid var(--line); }
+.cap h4 { font-family: var(--f-display); font-size: 19px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em; }
+.cap p { margin: 0; color: var(--muted); font-size: 14.5px; }
+
+/* ---------- Experience ---------- */
+.xp { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.job { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 24px; padding-block: 22px;
+  border-bottom: 1px solid var(--line); }
+.when { font-family: var(--f-mono); font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.job h4 { font-family: var(--f-display); font-size: 21px; margin: 0; letter-spacing: -.01em; }
+.job .at { color: var(--muted); margin: 2px 0 8px; font-size: 14.5px; }
+.job p { margin: 0; max-width: 66ch; font-size: 15px; }
+
+/* ---------- Footer ---------- */
+footer { padding-block: 48px 64px; }
+.cta { background: var(--ink); color: var(--bg); border-radius: 24px; padding: 40px;
+  display: grid; gap: 18px; }
+.cta h2 { color: var(--bg); }
+.cta p { margin: 0; opacity: .8; max-width: 56ch; }
+.cta .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.cta .btn { background: transparent; color: var(--bg); border-color: color-mix(in srgb, var(--bg) 35%, transparent); }
+.cta .btn.primary { background: var(--bg); color: var(--ink); border-color: var(--bg); }
+.cta .plain { color: var(--bg); opacity: .75; }
+.note { font-size: 12.5px; color: var(--muted); margin-top: 18px; }
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+  background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px; font-size: 14px; z-index: 20; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .app { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 22px; }
+  .phone-col { grid-auto-flow: row; }
+  .caps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cap:not(:nth-child(3n+1)) { padding-left: 0; border-left: 0; }
+  .cap:nth-child(2n) { padding-left: 22px; border-left: 1px solid var(--line); }
+}
+@media (max-width: 620px) {
+  .hero { padding-block: 44px 28px; }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fact:nth-child(3) { padding-left: 0; border-left: 0; }
+  .fact:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .caps { grid-template-columns: minmax(0, 1fr); }
+  .cap:nth-child(2n) { padding-left: 0; border-left: 0; }
+  .job { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .cta { padding: 26px; }
+  .phone { width: 168px; border-radius: 28px; }
+  .screen { border-radius: 21px; }
+  .store div + div { border-left: 0; }
+  .app h3 { font-size: 27px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .app { transition: transform .2s ease, border-color .2s ease; }
+  .app:hover { border-color: var(--c); }
+  .bar i { animation: play 6s linear infinite; }
+  @keyframes play { from { width: 12%; } to { width: 96%; } }
+}
+</style>
+</head>
+<body>
+
+<header class="wrap hero">
+  <div class="eyebrow"><span class="dot"></span>Open to new opportunities</div>
+  <h1>Phung Gia Hao</h1>
+  <p class="role">Senior React Native Developer · iOS &amp; Android</p>
+  <p class="lede">I build and ship mobile apps that real people rely on: short-drama streaming in Japan, care coordination for Japanese nursing teams, Web3 fitness in Vietnam, social networking in the US and a multi-chain NFT hub. I was a core developer on every app below, on both iOS and Android.</p>
+  <div class="facts">
+    <div class="fact"><b>5</b><span>products shipped</span></div>
+    <div class="fact"><b>3</b><span>markets: Japan, US, Vietnam</span></div>
+    <div class="fact"><b>4+</b><span>years with React Native</span></div>
+    <div class="fact"><b>10K+</b><span>Care Connect installs on Google Play</span></div>
+  </div>
+  <div class="contact">
+    <button class="btn primary" type="button" id="copy-email" data-copy="haochst1998@gmail.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+      Copy email
+    </button>
+    <a class="btn" href="https://www.linkedin.com/in/giahaophung98" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4v11H3v-11Zm7 0h3.8v1.5h.05c.53-1 1.83-1.75 3.4-1.75 3.6 0 4.25 2.2 4.25 5.1v6.15h-4v-5.45c0-1.3-.03-2.97-1.8-2.97-1.82 0-2.1 1.42-2.1 2.88v5.54h-4v-11Z"/></svg>
+      LinkedIn
+    </a>
+    <span class="plain">haochst1998@gmail.com · 0948 338 681</span>
+  </div>
+</header>
+
+<main>
+  <section class="wrap" id="work" aria-labelledby="work-title">
+    <div class="sec-head">
+      <div>
+        <h2 id="work-title">Shipped apps</h2>
+        <p>Live on the App Store and Google Play. Store figures were taken from the public listings in October 2026.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Filter apps by domain">
+        <button class="chip" type="button" id="f-all" data-filter="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" id="f-media" data-filter="media" aria-pressed="false">Media</button>
+        <button class="chip" type="button" id="f-health" data-filter="health" aria-pressed="false">Health &amp; care</button>
+        <button class="chip" type="button" id="f-web3" data-filter="web3" aria-pressed="false">Web3</button>
+        <button class="chip" type="button" id="f-social" data-filter="social" aria-pressed="false">Social</button>
+      </div>
+    </div>
+
+    <div class="apps">
+
+      <!-- StellaJean -->
+      <article class="app" data-app="stella" data-tags="media">
+        <div class="phone-col">
+          <div class="phone" aria-hidden="true"><div class="notch"></div>
+            <div class="screen s-stella">
+              <div class="side"><i></i><i></i><i></i></div>
+              <span class="coin"><b></b>Wait for free · 2 coins</span>
+              <span class="ep">EPISODE 07 / 60</span>
+              <span class="ttl">The Heiress Returns</span>
+              <div class="bar"><i></i></div>
+            </div>
+          </div>
+          <div class="platforms"><span>iOS</span><span>Android</span></div>
+        </div>
+        <div>
+          <div class="meta-top"><span class="domain">Media · Streaming</span><span>Japan</span><span>Entertainment</span></div>
+          <h3>StellaJean <small>ステラジーン</small></h3>
+          <p class="client">Client: BookLive Co., Ltd.</p>
+          <p class="desc">A short-drama app: vertical episodes of one to three minutes, with the original novel or script readable right beside each one. Viewers unlock episodes with coins that recharge over time, ad rewards or purchases.</p>
+          <dl class="store">
+            <div><dt>App Store JP</dt><dd>4.1 ★ · 47 ratings</dd></div>
+            <div><dt>Audience</dt><dd>Japanese &amp; English</dd></div>
+          </dl>
+          <p class="built-label">What I built</p>
+          <ul class="built">
+            <li>Full-screen vertical video player with one-handed swipe between episodes</li>
+            <li>Coin wallet, wait-for-free unlocks, rewarded ads and in-app purchases</li>
+            <li>Reading mode for original novels and scripts alongside the video</li>
+            <li>Favorites, follows, push notifications for new releases, deep links into titles</li>
+          </ul>
+          <ul class="stack"><li>React Native</li><li>TypeScript</li><li>Redux Toolkit</li><li>Video streaming</li><li>In-App Purchase</li><li>Firebase</li><li>Deep Linking</li></ul>
+          <div class="links">
+            <a class="btn" href="https://apps.apple.com/jp/app/id6759631098" target="_blank" rel="noopener">View on App Store ↗</a>
+          </div>
+          <div class="bundle">App Store id6759631098</div>
+        </div>
+      </article>
+
+      <!-- Care Connect -->
+      <article class="app" data-app="care" data-tags="health">
+        <div class="phone-col">
+          <div class="phone" aria-hidden="true"><div class="notch"></div>
+            <div class="screen s-care">
+              <div class="c-head"><i></i>Care team · Tanaka family</div>
+              <div class="msg">Today's visit record is ready to review.</div>
+              <div class="doc"><span>Care plan · November</span><i></i><i></i></div>
+              <div class="sign">Review &amp; e-sign consent</div>
+              <div class="msg me">Thank you, signed just now.</div>
+              <div class="c-bar"><i></i><b></b></div>
+            </div>
+          </div>
+          <div class="platforms"><span>iOS</span><span>Android</span></div>
+        </div>
+        <div>
+          <div class="meta-top"><span class="domain">Health · Care &amp; insurance</span><span>Japan</span><span>Medical</span></div>
+          <h3>Care Connect <small>ケアコネ</small></h3>
+          <p class="client">Client: CARE CONNECT JAPAN, Inc.</p>
+          <p class="desc">One shared space for everyone involved in long-term nursing care: care managers, service providers, families and doctors. It connects to the CAREKARTE care-record system and supports Japan's long-term care insurance workflow.</p>
+          <dl class="store">
+            <div><dt>Google Play</dt><dd>10K+ installs</dd></div>
+            <div><dt>Rated</dt><dd>Everyone</dd></div>
+          </dl>
+          <p class="built-label">What I built</p>
+          <ul class="built">
+            <li>Group chat, voice and video calls with photo, video and file sharing</li>
+            <li>Sharing CAREKARTE care records, charts and forms with the care group</li>
+            <li>Care plan review and electronic consent for users and their families</li>
+            <li>Approval requests, cross-device read status and care insurance card import</li>
+          </ul>
+          <ul class="stack"><li>React Native</li><li>TypeScript</li><li>Real-time chat</li><li>Voice &amp; video calls</li><li>File sharing</li><li>Push notifications</li></ul>
+          <div class="links">
+            <a class="btn" href="https://play.google.com/store/apps/details?id=jp.carekarte.careconnect" target="_blank" rel="noopener">View on Google Play ↗</a>
+          </div>
+          <div class="bundle">jp.carekarte.careconnect</div>
+        </div>
+      </article>
+
+      <!-- RunTogether -->
+      <article class="app" data-app="run" data-tags="web3 health">
+        <div class="phone-col">
+          <div class="phone" aria-hidden="true"><div class="notch"></div>
+            <div class="screen s-run">
+              <div class="map">
+                <svg viewBox="0 0 100 140" preserveAspectRatio="none"><path d="M14 122 C 24 96, 10 78, 34 70 S 70 74, 64 50 S 80 22, 88 16" fill="none" stroke="#F26A1B" stroke-width="4" stroke-linecap="round"/><circle cx="88" cy="16" r="5" fill="#FFFFFF"/></svg>
+              </div>
+              <div class="km">5.42<small>km</small></div>
+              <div class="r-row"><span>32:10 time</span><span>5'56" /km</span></div>
+              <div class="token">+ RUN earned <span>12.8 RUN</span></div>
+            </div>
+          </div>
+          <div class="platforms"><span>iOS</span><span>Android</span></div>
+        </div>
+        <div>
+          <div class="meta-top"><span class="domain">Web3 · GameFi &amp; SocialFi</span><span>Vietnam</span><span>Health &amp; Fitness</span></div>
+          <h3>RunTogether</h3>
+          <p class="client">Move-to-earn fitness app</p>
+          <p class="desc">People walk and run together, equip NFT gear such as shoes and sportswear, and earn RUN tokens they can convert, spend on brand e-vouchers or exchange for real sneakers.</p>
+          <dl class="store">
+            <div><dt>Google Play</dt><dd>500+ installs</dd></div>
+            <div><dt>Tokens</dt><dd>RUN → VNDC · USDT · BNB</dd></div>
+          </dl>
+          <p class="built-label">What I built</p>
+          <ul class="built">
+            <li>Run tracking with GPS maps, Apple HealthKit and Google Fit, plus post-run achievements</li>
+            <li>NFT gear and sneaker marketplace, with RUN redeemable for real shoes</li>
+            <li>Token rewards and conversion on-chain, wallet connection and KYC verification</li>
+            <li>E-vouchers from partner brands, MoMo and ZaloPay payments</li>
+          </ul>
+          <ul class="stack"><li>React Native</li><li>TypeScript</li><li>Next.js</li><li>MetaMask</li><li>HealthKit</li><li>Google Fit</li><li>Google Maps</li><li>MoMo · ZaloPay</li></ul>
+          <div class="links">
+            <a class="btn" href="https://play.google.com/store/apps/details?id=com.runtogether" target="_blank" rel="noopener">View on Google Play ↗</a>
+          </div>
+          <div class="bundle">com.runtogether</div>
+        </div>
+      </article>
+
+      <!-- NaWeDey -->
+      <article class="app" data-app="nawe" data-tags="social">
+        <div class="phone-col">
+          <div class="phone" aria-hidden="true"><div class="notch"></div>
+            <div class="screen s-nawe">
+              <div class="stories"><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="post">
+                <div class="who"><i></i>Community · Houston</div>
+                <div class="pic"></div>
+                <div class="ln"></div><div class="ln s"></div>
+              </div>
+              <div class="event"><b>14<small>NOV</small></b><span>Saturday meetup<br>Saved to your calendar</span></div>
+            </div>
+          </div>
+          <div class="platforms"><span>iOS</span><span>Android</span></div>
+        </div>
+        <div>
+          <div class="meta-top"><span class="domain">Social · Communication</span><span>United States</span><span>Social Networking</span></div>
+          <h3>NaWeDey</h3>
+          <p class="client">Client: NaWeDey, Inc.</p>
+          <p class="desc">An all-in-one social app for staying close to a community: posts and follows, interest groups, events, world news, matching and private conversations.</p>
+          <dl class="store">
+            <div><dt>App Store US</dt><dd>5.0 ★</dd></div>
+            <div><dt>Model</dt><dd>Free + in-app purchases</dd></div>
+          </dl>
+          <p class="built-label">What I built</p>
+          <ul class="built">
+            <li>Real-time chat and in-app video calling with Agora</li>
+            <li>Feed, follows, friend requests and community groups</li>
+            <li>Events with calendar reminders, and interest-based matching</li>
+            <li>In-app purchases and fluid Reanimated interactions</li>
+          </ul>
+          <ul class="stack"><li>React Native</li><li>TypeScript</li><li>Agora</li><li>Firebase</li><li>In-App Purchase</li><li>Reanimated</li></ul>
+          <div class="links">
+            <a class="btn" href="https://apps.apple.com/us/app/nawedey/id6462760140" target="_blank" rel="noopener">View on App Store ↗</a>
+          </div>
+          <div class="bundle">App Store id6462760140</div>
+        </div>
+      </article>
+
+      <!-- CorgiStudio -->
+      <article class="app" data-app="corgi" data-tags="web3">
+        <div class="phone-col">
+          <div class="phone" aria-hidden="true"><div class="notch"></div>
+            <div class="screen s-corgi">
+              <div class="bal">UNIFIED HOLDINGS<b>24 NFTs</b></div>
+              <div class="chains"><span>Base</span><span>Polygon</span><span>Cronos</span><span>Solana</span></div>
+              <div class="grid"><div class="nft"></div><div class="nft"></div><div class="nft"></div><div class="nft"></div></div>
+              <div class="stake">Stake collection</div>
+            </div>
+          </div>
+          <div class="platforms"><span>iOS</span><span>Android</span><span>Web</span></div>
+        </div>
+        <div>
+          <div class="meta-top"><span class="domain">Web3 · NFT</span><span>Multi-chain</span><span>Creator tools</span></div>
+          <h3>CorgiStudio</h3>
+          <p class="client">Multi-chain creator hub</p>
+          <p class="desc">A creator hub and command centre across Base, Polygon, Cronos and Solana. Creators and collectors manage NFT collections, use marketplace tools, stake, and see all their holdings across chains in one place.</p>
+          <dl class="store">
+            <div><dt>Chains</dt><dd>Base · Polygon · Cronos · Solana</dd></div>
+          </dl>
+          <p class="built-label">What I built</p>
+          <ul class="built">
+            <li>NFT collection browsing and marketplace flows on mobile and web</li>
+            <li>Unified holdings view that brings assets from four chains together</li>
+            <li>Staking flows with wallet connection and clear transaction states</li>
+          </ul>
+          <ul class="stack"><li>React Native</li><li>Next.js</li><li>TypeScript</li><li>MetaMask</li><li>Smart contracts</li><li>Multi-chain</li></ul>
+          <div class="links">
+            <a class="btn" href="https://corgistudio.io" target="_blank" rel="noopener">Visit corgistudio.io ↗</a>
+          </div>
+          <div class="bundle">corgistudio.io</div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="cap-title">
+    <div class="sec-head"><div><h2 id="cap-title">What I bring to a team</h2></div></div>
+    <div class="caps">
+      <div class="cap"><h4>Cross-platform mobile</h4><p>React Native and TypeScript, native modules in Swift and Kotlin, New Architecture, React Navigation, Redux Toolkit.</p></div>
+      <div class="cap"><h4>Video &amp; real-time</h4><p>Streaming with HLS and MPEG-DASH, Widevine and FairPlay DRM, Agora video calls, WebSocket and chat.</p></div>
+      <div class="cap"><h4>Payments &amp; monetization</h4><p>StoreKit, Google Play Billing, RevenueCat subscriptions, coins and rewarded ads, MoMo and ZaloPay.</p></div>
+      <div class="cap"><h4>Web3</h4><p>MetaMask wallet connection, NFT minting and marketplaces, staking, on-chain token rewards across chains.</p></div>
+      <div class="cap"><h4>Performance &amp; stability</h4><p>Startup, rendering and memory tuning, Crashlytics monitoring and root-cause fixes in production.</p></div>
+      <div class="cap"><h4>Release &amp; full stack</h4><p>Fastlane and GitHub Actions pipelines, store releases, Next.js web, Node.js APIs and PostgreSQL.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="xp-title">
+    <div class="sec-head"><div><h2 id="xp-title">Experience</h2></div></div>
+    <div class="xp">
+      <div class="job">
+        <div class="when">Jul 2024 – Present</div>
+        <div>
+          <h4>React Native Developer</h4>
+          <p class="at">Javis</p>
+          <p>Core features for production video streaming on iOS and Android: DRM playback, subscriptions and in-app purchases, performance tuning, Firebase monitoring and automated releases with Fastlane and GitHub Actions.</p>
+        </div>
+      </div>
+      <div class="job">
+        <div class="when">Jul 2022 – Jul 2024</div>
+        <div>
+          <h4>Mobile &amp; Backend Developer</h4>
+          <p class="at">Soin Media · Ho Chi Minh City</p>
+          <p>Cross-platform apps for media, health, social and Web3 clients, plus the Node.js services behind them. Built shared UI libraries, integrated payments, health data and video calling, and worked directly with clients.</p>
+        </div>
+      </div>
+      <div class="job">
+        <div class="when">2016 – 2021</div>
+        <div>
+          <h4>Bachelor of Information Technology</h4>
+          <p class="at">Can Tho University of Engineering and Technology</p>
+          <p>Software Engineering.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="cta">
+    <h2>Let's build your next app</h2>
+    <p>Based in Vietnam and open to mobile and full-stack roles. I usually reply within a day.</p>
+    <div class="row">
+      <button class="btn primary" type="button" id="copy-email-2" data-copy="haochst1998@gmail.com">Copy email</button>
+      <button class="btn" type="button" id="copy-phone" data-copy="0948338681">Copy phone</button>
+      <a class="btn" href="https://www.linkedin.com/in/giahaophung98" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <span class="plain">haochst1998@gmail.com · 0948 338 681</span>
+    </div>
+  </div>
+  <p class="note">App names, store listings and descriptions belong to their respective owners and are shown here as examples of my work. Phone screens are illustrations.</p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function () {
+  var chips = document.querySelectorAll('.chip');
+  var apps = document.querySelectorAll('.app');
+  function apply(f) {
+    chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c.dataset.filter === f)); });
+    apps.forEach(function (a) {
+      a.hidden = !(f === 'all' || (' ' + a.dataset.tags + ' ').indexOf(' ' + f + ' ') > -1);
+    });
+    try { localStorage.setItem('pf-filter', f); } catch (e) {}
+  }
+  chips.forEach(function (c) { c.addEventListener('click', function () { apply(c.dataset.filter); }); });
+  try { var saved = localStorage.getItem('pf-filter'); if (saved) apply(saved); } catch (e) {}
+
+  var toast = document.getElementById('toast'), t;
+  function show(msg) {
+    toast.textContent = msg; toast.hidden = false;
+    clearTimeout(t); t = setTimeout(function () { toast.hidden = true; }, 1800);
+  }
+  document.querySelectorAll('[data-copy]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var v = b.dataset.copy;
+      var done = function () { show('Copied ' + v); };
+      var fail = function () { show(v); };
+      try {
+        navigator.clipboard.writeText(v).then(done, fail);
+      } catch (e) { fail(); }
+    });
+  });
+})();
+</script>
+</body>
+</html>
